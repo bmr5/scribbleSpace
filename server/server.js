@@ -6,9 +6,12 @@ require('dotenv').config();
 const port = process.env.PORT || 3000;
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const fetch = require('node-fetch');
 
 const roomCtrl = require('./controllers/roomCtrl');
 const userCtrl = require('./controllers/userCtrl');
+const { google } = require('googleapis');
+const { url, oauth2Client } = require('./controllers/googleOauth');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -37,19 +40,36 @@ app.post('/forgotPassword', userCtrl.checkUser, (req, res, next) => {
   res.status(200).send(JSON.stringify(res.locals));
 });
 
-app.post('/resetPassword', userCtrl.updatePassword, (req, res, next)=>{
-  console.log('reset password for:', req.body.name,'from',req.body.password,'to', req.body.password)
+app.post('/resetPassword', userCtrl.updatePassword, (req, res, next) => {
+  console.log('reset password for:', req.body.name, 'from', req.body.password, 'to', req.body.password)
   res.redirect('/')
 })
 
 //room routes
 
-app.post('/createRoom', roomCtrl.createRoom, (req, res, next)=>{
+app.post('/createRoom', roomCtrl.createRoom, (req, res, next) => {
   console.log('created room for:', req.body.username, 'at', res.locals.socketId)
   res.send(res.locals)
 })
 
 //generic routes
+
+app.get('/google', (req, res) => {
+  res.redirect(url);
+})
+
+app.get('/scribbleSpace', async (req, res) => {
+  const authCode = req.query.code;
+  const { tokens } = await oauth2Client.getToken(authCode);
+  oauth2Client.setCredentials(tokens);
+  // console.log(tokens);
+  fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${tokens.id_token}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+    })
+  res.send(tokens);
+})
 
 app.get('/', (req, res) => {
   console.log('home html')
