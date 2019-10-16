@@ -14,14 +14,6 @@ function LoginForm(props) {
               onChange={props.handleChangeName}
             />
           </label>
-          {/* <label>
-            <input
-              placeholder="Room Name"
-              type="text"
-              value={props.roomName}
-              onChange={props.handleChangeRoom}
-            />
-          </label> */}
           <label>
             {/* Password input field */}
             <input
@@ -33,8 +25,10 @@ function LoginForm(props) {
           </label>
           {/* Main submit button */}
           <input id='loginButton' type='submit' value='Login' />
-          <input id='googleLogin' type='submit' value='Google' />
         </div>
+      </form>
+      <form action='/google' method='GET'>
+        <input id='googleLogin' type='submit' value='Google' />
       </form>
       <div>
         <input id='forgotPassword' type='submit' value='Forgot Password' />
