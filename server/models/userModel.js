@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
-const uri = 'mongodb+srv://Admin:heelie@cluster0-vzivm.mongodb.net/test?retryWrites=true&w=majority'
+const uri = 'mongodb+srv://Admin:heelie@cluster0-vzivm.mongodb.net/ScribbleSpace?retryWrites=true&w=majority'
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
 
 const UserSchema = new mongoose.Schema({
-  roomName: {
+  username: {
     type: String,
     required: true,
     unique: true,
@@ -15,6 +15,6 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model('User', UserSchema);
+const Users = mongoose.model('Users', UserSchema);
 
-module.exports = User;
+module.exports = Users;
