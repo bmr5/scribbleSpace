@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
-// const roomCtrl = require('./controllers/roomCtrl');
+const roomCtrl = require('./controllers/roomCtrl');
 const userCtrl = require('./controllers/userCtrl');
 
 app.use(express.json());
@@ -16,29 +16,45 @@ app.use(cookieParser());
 //serve the bundle
 app.use(express.static(path.join(__dirname, 'src')));
 
-// app.use(express.static(path.resolve(__dirname, '../dist')), (req, res, next)=>{
-//   next()
-// }); //
+app.get('/dist/bundle.js', (req, res, next) => {
+  res.sendFile(path.resolve(__dirname, '../dist/bundle.js'));
+});
 
-// app.get('/dist/bundle.js', (req, res, next) => {
-//   res.sendFile(path.resolve(__dirname, '../dist/bundle.js'));
-// });
+//user routes
 
-// app.get('/', (req, res, next) => {
-//   res.sendFile(path.resolve(__dirname, '../src/index.html'));
-// });
+app.post('/createAccount', userCtrl.createUser, (req, res, next) => {
+  console.log('created acount for:', req.body)
+  res.redirect('/')
+})
 
 app.post('/login', userCtrl.checkLogin, (req, res, next) => {
-  console.log('login on express', req.body);
+  console.log('login for:', req.body);
+  res.send(res.locals)
 });
 
-app.use('/', (req, res) => {
-  res.status(200).sendFile(path.resolve(__dirname, './../src/index.html'));
-});
-
-app.post('/test', userCtrl.updatePassword, (req, res, next) => {
-  console.log(res.locals.updateComplete);
+app.post('/forgotPassword', userCtrl.checkUser, (req, res, next) => {
+  console.log('checked DB for:', req.body.name);
   res.status(200).send(JSON.stringify(res.locals));
+});
+
+app.post('/resetPassword', userCtrl.updatePassword, (req, res, next)=>{
+  console.log('reset password for:', req.body.name,'from',req.body.password,'to', req.body.password)
+  res.redirect('/')
+})
+
+//room routes
+
+app.post('/createRoom', roomCtrl.createRoom, (req, res, next)=>{
+  console.log('created room for:', req.body.username, 'at', res.locals.socketId)
+  res.send(res.locals)
+})
+
+
+//generic routes
+
+app.get('/', (req, res) => {
+  console.log('home html')
+  res.status(200).sendFile(path.resolve(__dirname, '../src/index.html'));
 });
 
 // standard bad endpoint, send 404

@@ -7,20 +7,18 @@ const RoomSchema = new mongoose.Schema({
   roomName: {
     type: String,
     required: true,
+  },
+  socketId: {
+    type: String,
+    required: true,
     unique: true
   },
-  password: {
-    type: String,
-    required: true
-  },
-  data: {
-    type: String,
+  users: {
+    type: [String],
     required: false
   }
 });
 
-const createRoomModel = name => {
-  return mongoose.model(name, RoomSchema);
-};
+const Rooms = mongoose.model('Rooms', RoomSchema);
 
-module.exports = createRoomModel;
+module.exports = Rooms;
