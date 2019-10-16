@@ -3,7 +3,7 @@ import React from 'react';
 function LoginForm(props) {
   return (
     <div className='loginBox'>
-      <form onSubmit={props.handleSubmit}>
+      <form onSubmit={props.handleLogin}>
         <div className='inputBoxOnLoginComponent'>
           <label>
             {/* Username input field */}
@@ -33,8 +33,13 @@ function LoginForm(props) {
           </label>
           {/* Main submit button */}
           <input id='loginButton' type='submit' value='Login' />
+          <input id='googleLogin' type='submit' value='Google' />
         </div>
       </form>
+      <div>
+        <input id='forgotPassword' type='submit' value='Forgot Password' />
+        <input id='creatAccount' type='submit' value='Create Account' />
+      </div>
       <img id='scribbleLogo' src='scribble-svgrepo-com.svg' alt='' />
     </div>
   );
