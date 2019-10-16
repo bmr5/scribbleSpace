@@ -49,7 +49,6 @@ app.post('/createRoom', roomCtrl.createRoom, (req, res, next)=>{
   res.send(res.locals)
 })
 
-
 //generic routes
 
 app.get('/', (req, res) => {
