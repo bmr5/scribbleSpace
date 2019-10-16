@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import CanvasDraw from 'react-canvas-draw';
 import OptionBar from './OptionBar.jsx'
 
-const io = require('socket.io-client');
+// const io = require('socket.io-client');
 
-const socket = io();
+// const socket = io();
 
 // CanvasDraw imports the third party canvas npm package.
 // ReadMe docs located in node packages react-canvas-draw info on modifying the canvas app.
