@@ -1,21 +1,22 @@
 const mongoose = require('mongoose');
-const uri = 'mongodb+srv://Admin:heelie@cluster0-vzivm.mongodb.net/test?retryWrites=true&w=majority'
-mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
+
+const uri = process.env.DB_URI;
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 
 const RoomSchema = new mongoose.Schema({
   roomName: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
   data: {
     type: String,
-    required: false,
-  },
+    required: false
+  }
 });
 
 const createRoomModel = name => {
