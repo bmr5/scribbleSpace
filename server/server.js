@@ -20,16 +20,20 @@ app.get('/dist/bundle.js', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '../dist/bundle.js'));
 });
 
+app.get('/scribble-svgrepo-com.svg', (req, res, next) => {
+  res.sendFile(path.resolve(__dirname, '../dist/scribble-svgrepo-com.svg'));
+});
+
 //user routes
 
 app.post('/createAccount', userCtrl.createUser, (req, res, next) => {
-  console.log('created acount for:', req.body)
-  res.redirect('/')
-})
+  console.log('created acount for:', req.body);
+  res.redirect('/');
+});
 
 app.post('/login', userCtrl.checkLogin, (req, res, next) => {
   console.log('login for:', req.body);
-  res.send(res.locals)
+  res.send(res.locals);
 });
 
 app.post('/forgotPassword', userCtrl.checkUser, (req, res, next) => {
@@ -37,22 +41,48 @@ app.post('/forgotPassword', userCtrl.checkUser, (req, res, next) => {
   res.status(200).send(JSON.stringify(res.locals));
 });
 
-app.post('/resetPassword', userCtrl.updatePassword, (req, res, next)=>{
-  console.log('reset password for:', req.body.name,'from',req.body.password,'to', req.body.password)
-  res.redirect('/')
-})
+app.post('/resetPassword', userCtrl.updatePassword, (req, res, next) => {
+  console.log(
+    'reset password for:',
+    req.body.name,
+    'from',
+    req.body.password,
+    'to',
+    req.body.password
+  );
+  res.redirect('/');
+});
 
 //room routes
 
-app.post('/createRoom', roomCtrl.createRoom, (req, res, next)=>{
-  console.log('created room for:', req.body.username, 'at', res.locals.socketId)
-  res.send(res.locals)
-})
+app.post('/scribbleSpace', roomCtrl.createRoom, (req, res, next) => {
+  res.status(200).send('hello');
+});
+
+app.post('/createRoom', roomCtrl.createRoom, (req, res, next) => {
+  console.log(
+    'created room for:',
+    req.body.username,
+    'at',
+    res.locals.socketId
+  );
+  res.send(res.locals);
+});
+
+// log req / res
+app.use((req, res, next) => {
+  console.log(
+    `FLOW:: METHOD: ${req.method}, PATH: ${req.url}, BODY: ${JSON.stringify(
+      req.body
+    )}`
+  );
+  return next();
+});
 
 //generic routes
 
 app.get('/', (req, res) => {
-  console.log('home html')
+  console.log('home html');
   res.status(200).sendFile(path.resolve(__dirname, '../src/index.html'));
 });
 

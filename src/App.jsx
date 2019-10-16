@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import LandingPage from './containers/LandingPage';
 import ScribbleSpace from './containers/ScribbleSpace';
 
-
 const io = require('socket.io-client');
 const socket = io();
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +14,7 @@ class App extends Component {
       password: null,
       loggedin: false,
       socketId: null,
-      data: null,
+      data: null
     };
     this.saveDrawingData = this.saveDrawingData.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
@@ -50,7 +48,7 @@ class App extends Component {
     fetch('/save', {
       headers: { 'Content-type': 'application/json' },
       method: 'POST',
-      body: JSON.stringify({ data }),
+      body: JSON.stringify({ data })
     });
   }
 
@@ -68,23 +66,19 @@ class App extends Component {
   handleLogin(event) {
     event.preventDefault();
 
-    console.log(
-      'A name was submitted: ',
-      this.state.name,
-      this.state.password
-    );
+    console.log('A name was submitted: ', this.state.name, this.state.password);
 
     fetch('/login', {
       headers: { 'Content-type': 'application/json' },
       method: 'POST',
       body: JSON.stringify({
         name: this.state.name,
-        password: this.state.password,
+        password: this.state.password
       })
     })
       .then(data => data.json())
       .then(data => console.log(data))
-      .catch(err => console.log(err))
+      .catch(err => console.log(err));
   }
   // Leave Room sets the state of "Logged in " to null.
 
@@ -103,8 +97,8 @@ class App extends Component {
         name: this.state.name,
         roomName: this.state.roomName,
         password: this.state.password,
-        socketId: this.state.socketId,
-      }),
+        socketId: this.state.socketId
+      })
     })
       .then(res => res.json())
       .then(data => {
@@ -122,7 +116,6 @@ class App extends Component {
     socket.emit('transfer', saveData);
   }
 
-
   // NEW METHODS
   createUser(userEvent, pwEvent) {
     const { username } = userEvent.target.username.value;
@@ -133,7 +126,7 @@ class App extends Component {
       body: JSON.stringify({ username, password })
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => console.log(data));
   }
 
   resetPassword(userEvent, pwEvent) {
@@ -145,26 +138,26 @@ class App extends Component {
       body: JSON.stringify({ username, password })
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => console.log(data));
   }
 
   render() {
-    const landingPage = <LandingPage
-      name={this.name}
-      handleChangeName={this.handleChangeName}
-      password={this.password}
-      handleChangePassword={this.handleChangePassword}
-      // new methods
-      createUser={this.createUser}
-      resetPassword={this.resetPassword}
-      handleLogin={this.handleLogin}
-    />
-    // const scribbleSpace = <ScribbleSpace />
-    return (
-      <div>
-        {landingPage}
-      </div>
-    )
+    const landingPage = (
+      <LandingPage
+        name={this.name}
+        handleChangeName={this.handleChangeName}
+        password={this.password}
+        handleChangePassword={this.handleChangePassword}
+        // new methods
+        createUser={this.createUser}
+        resetPassword={this.resetPassword}
+        handleLogin={this.handleLogin}
+      />
+    );
+    const scribbleSpace = (
+      <ScribbleSpace socketId={this.state.socketId} name={this.state.name} />
+    );
+    return <div>{landingPage}</div>;
   }
 }
 

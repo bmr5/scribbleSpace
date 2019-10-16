@@ -5,7 +5,8 @@ import App from './App.jsx';
 
 const Scibble = () => (
   <div>
-    <App/>
+    <h1 className='logoMain'>scribbleSpace</h1>
+    <App />
   </div>
 );
 
