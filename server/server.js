@@ -49,12 +49,10 @@ app.use((err, req, res, next) => {
     message: 'Default Error from the Global Error Handler'
   };
 
-  console.log('global error handler triggered');
-  const assignError = { ...defaultError, ...err };
-
-  // send the response
-  res.status(assignError.status).send(assignError.message);
-});
+app.post('/test', userCtrl.updatePassword, (req, res,next) => {
+  console.log(res.locals.updateComplete)
+  res.status(200).send(JSON.stringify(res.locals))
+})
 
 function onConnection(socket) {
   socket.on('transfer', data => io.emit('broadcast', data));
