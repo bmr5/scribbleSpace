@@ -26,10 +26,10 @@ app.get('/', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '../src/index.html'))
 })
 
-app.post('/login', userCtrl.test, (req,res,next)=>{
-  console.log('login on express', req.body)
+app.post('/test', userCtrl.updatePassword, (req, res,next) => {
+  console.log(res.locals.updateComplete)
+  res.status(200).send(JSON.stringify(res.locals))
 })
-
 
 function onConnection(socket) {
   socket.on('transfer', data => io.emit('broadcast', data));

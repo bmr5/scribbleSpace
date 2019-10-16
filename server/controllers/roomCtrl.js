@@ -1,36 +1,11 @@
-const createRoomModel = require('../models/roomModel');
+const mongoose = require('mongoose');
+const uri = 'mongodb+srv://Admin:heelie@cluster0-vzivm.mongodb.net/ScribbleSpace?retryWrites=true&w=majority'
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true })
 
-// passing input room into argument
-const Room = createRoomModel('room6');
+const Rooms = require('../models/roomModel');
 
 const roomCtrl = {};
 
-roomCtrl.crRoom = function(req, res, next) {
-  Room.count({}, (err, count) => {
-    if (err) {
-      return res.send('error in count');
-    }
-    const { data } = req.body;
-    Room.create({ data, saveId: count + 1 }, (err, doc) => {
-      if (err) {
-        return res.send('error in room');
-      }
-      console.log('Room created');
-      return next();
-    });
-  });
-};
 
-roomCtrl.findRoom = function(req, res, next) {
-  const { saveId } = req.body;
-  Room.find({ saveId }, (err, doc) => {
-    if (err) {
-      return res.send('error in room');
-    }
-    console.log('Found Rooms', doc);
-    res.json(doc);
-    return next();
-  });
-};
 
 module.exports = roomCtrl;
