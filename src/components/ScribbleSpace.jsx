@@ -37,7 +37,7 @@ class ScribbleSpace extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        console.log(data);
         if (data.status === 'available') {
           console.log('room created');
           this.setState({ loggedin: true });
@@ -48,7 +48,7 @@ class ScribbleSpace extends Component {
 
   render() {
     const makeRoom = (
-      <div className='buttonContainer'>
+      <div className='buttonContainer room'>
         <input
           type='text'
           name='roomName'
