@@ -17,6 +17,7 @@
   font-size: 60px;
   font-family: 'Hepta Slab', serif;
   text-shadow: 2px 2px 2px rgb(122, 130, 153);
+  text-decoration: line-through;
 }
 .logoMain a {
   color: inherit;
