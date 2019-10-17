@@ -1,8 +1,8 @@
 const { google } = require('googleapis');
 
 const oauth2Client = new google.auth.OAuth2(
-  '562231562934-4chj9222am4nbhukta775h8c25frhktm.apps.googleusercontent.com',
-  '8cYuyh1JHkGrMCz2cgHabUfY',
+  process.env.GAUTH_ID,
+  process.env.GAUTH_SECRET,
   'http://localhost:3000/scribbleSpace'
 );
 
