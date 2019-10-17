@@ -60,6 +60,11 @@ app.post('/resetPassword', userCtrl.updatePassword, (req, res, next) => {
   res.redirect('/');
 });
 
+app.get('/logout', (req, res, next)=> {
+  cookies.set('username', {expires: Date.now()})
+  res.redirect('/')
+})
+
 //oauth routes
 app.get('/google', (req, res) => {
   res.redirect(url);
@@ -73,6 +78,7 @@ app.get('/scribbleSpace', async (req, res, next) => {
   fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${tokens.id_token}`)
     .then(res => res.json())
     .then(data => {
+      res.cookie('username', data.email);
       console.log('oauth successful', data);
       req.body.username = data.email;
       req.body.password = data.kid;
@@ -80,7 +86,7 @@ app.get('/scribbleSpace', async (req, res, next) => {
     });
   // res.send({ loggedIn: 'true' });
   res.locals.loggedIn = true;
-  res.redirect('http://localhost:8080/spaces');
+  res.redirect('/spaces');
 });
 
 //room routes

@@ -3,7 +3,7 @@ const { google } = require('googleapis');
 const oauth2Client = new google.auth.OAuth2(
   process.env.GAUTH_ID,
   process.env.GAUTH_SECRET,
-  'http://localhost:3000/scribbleSpace'
+  process.env.GAUTH_URL
 );
 
 // generate a url that asks permissions for Blogger and Google Calendar scopes
