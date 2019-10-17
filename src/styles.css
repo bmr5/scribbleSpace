@@ -182,6 +182,6 @@ body {
 .drawsection {
   display: flex;
   justify-content: space-around;
-  height: 450px;
+  height: 352px;
   margin-bottom: 100px;
 }
