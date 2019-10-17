@@ -24,6 +24,10 @@ app.get('/scribble-svgrepo-com.svg', (req, res, next) => {
   res.sendFile(path.resolve(__dirname, '../dist/scribble-svgrepo-com.svg'));
 });
 
+app.get('/google.png', (req, res, next) => {
+  res.sendFile(path.resolve(__dirname, '../dist/google.png'));
+});
+
 //user routes
 
 app.post('/createAccount', userCtrl.createUser, (req, res, next) => {
@@ -81,15 +85,15 @@ app.use((req, res, next) => {
 
 //generic routes
 
-app.get('/', (req, res) => {
+app.use('*', (req, res) => {
   console.log('home html');
   res.status(200).sendFile(path.resolve(__dirname, '../src/index.html'));
 });
 
 // standard bad endpoint, send 404
-app.use('*', (req, res) => {
-  res.status(404).send('no route found');
-});
+// app.use('*', (req, res) => {
+//   res.status(404).send('no route found');
+// });
 
 // global error handler
 app.use((err, req, res, next) => {

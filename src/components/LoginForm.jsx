@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Link } from 'react';
 // Creates LoginForm, allows for input of username,password, and room number.
 function LoginForm(props) {
   return (
     <div className='loginBox'>
+      <img id='scribbleLogo' src='scribble-svgrepo-com.svg' alt='' />
       <form onSubmit={props.handleLogin}>
         <div className='inputBoxOnLoginComponent'>
           <label>
@@ -14,14 +15,6 @@ function LoginForm(props) {
               onChange={props.handleChangeName}
             />
           </label>
-          {/* <label>
-            <input
-              placeholder="Room Name"
-              type="text"
-              value={props.roomName}
-              onChange={props.handleChangeRoom}
-            />
-          </label> */}
           <label>
             {/* Password input field */}
             <input
@@ -33,14 +26,15 @@ function LoginForm(props) {
           </label>
           {/* Main submit button */}
           <input id='loginButton' type='submit' value='Login' />
-          <input id='googleLogin' type='submit' value='Google' />
         </div>
       </form>
-      <div>
-        <input id='forgotPassword' type='submit' value='Forgot Password' />
-        <input id='creatAccount' type='submit' value='Create Account' />
+      <a className='google' href='/#'>
+        <img src='/google.png' />
+      </a>
+      <div className='links'>
+        <a href='/forgot-password'>FORGOT PASSWORD?</a>
+        <a href='/signup'>SIGNUP</a>
       </div>
-      <img id='scribbleLogo' src='scribble-svgrepo-com.svg' alt='' />
     </div>
   );
 }

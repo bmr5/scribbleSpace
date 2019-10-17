@@ -15,6 +15,7 @@ class LandingPage extends Component {
         handleChangeName={this.props.handleChangeName}
         password={this.props.password}
         handleChangePassword={this.props.handleChangePassword}
+        link={this.props.link}
       />
     );
     const resetPw = <ResetPassword resetPassword={this.props.resetPassword} />;

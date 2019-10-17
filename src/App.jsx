@@ -18,6 +18,7 @@ class App extends Component {
     };
     this.saveDrawingData = this.saveDrawingData.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
+    this.handleChangePassword = this.handleChangePassword.bind(this);
     this.handleChangeRoom = this.handleChangeRoom.bind(this);
     this.leaveRoom = this.leaveRoom.bind(this);
     this.loadBoard = this.loadBoard.bind(this);
@@ -63,6 +64,11 @@ class App extends Component {
     this.setState({ roomName: event.target.value });
   }
 
+  handleChangePassword(event) {
+    console.log(event, 'EVENT TARGET', event.target.value);
+    this.setState({ password: event.target.value });
+  }
+
   handleLogin(event) {
     event.preventDefault();
 
@@ -77,7 +83,7 @@ class App extends Component {
       })
     })
       .then(data => data.json())
-      .then(data => console.log(data))
+      .then(data => console.log('here here', data))
       .catch(err => console.log(err));
   }
   // Leave Room sets the state of "Logged in " to null.
@@ -152,6 +158,7 @@ class App extends Component {
         createUser={this.createUser}
         resetPassword={this.resetPassword}
         handleLogin={this.handleLogin}
+
       />
     );
     const scribbleSpace = (
