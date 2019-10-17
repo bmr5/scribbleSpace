@@ -78,13 +78,15 @@ app.get('/scribbleSpace', async (req, res, next) => {
       req.body.password = data.kid;
       userCtrl.createUser(req, res, next);
     });
-  res.send(tokens);
+  // res.send({ loggedIn: 'true' });
+  res.locals.loggedIn = true;
+  res.redirect('/spaces');
 });
 
 //room routes
 
 app.post('/scribbleSpace', roomCtrl.createRoom, (req, res, next) => {
-  res.status(200).send('hello');
+  res.send({ status: 'available' });
 });
 
 app.post('/createRoom', roomCtrl.createRoom, (req, res, next) => {

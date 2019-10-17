@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LandingPage from './containers/LandingPage';
-import ScribbleSpace from './containers/ScribbleSpace';
+import ScribbleSpace from './components/ScribbleSpace';
+import MainBoard from './components/MainBoard';
 
 const io = require('socket.io-client');
 const socket = io();
@@ -8,6 +9,7 @@ const socket = io();
 class App extends Component {
   constructor(props) {
     super(props);
+    this._isMounted = true;
     this.state = {
       name: null,
       roomName: null,
@@ -35,12 +37,17 @@ class App extends Component {
   // - This.state.data is updated with broadcast data.
 
   componentDidMount() {
+    this._isMounted = true;
     socket.on('connect', () => {
-      this.setState({ socketId: socket.id });
+      if (this._isMounted) this.setState({ socketId: socket.id });
     });
     socket.on('broadcast', data => {
-      this.setState({ data });
+      if (this._isMounted) this.setState({ data });
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   // Method Sends canvas drawing data to server
@@ -158,13 +165,29 @@ class App extends Component {
         createUser={this.createUser}
         resetPassword={this.resetPassword}
         handleLogin={this.handleLogin}
-
       />
     );
     const scribbleSpace = (
       <ScribbleSpace socketId={this.state.socketId} name={this.state.name} />
     );
-    return <div>{landingPage}</div>;
+    console.log(this.state);
+    if (this.state.loggedin) {
+      return (
+        <div>
+          <MainBoard
+            loadBoard={this.loadBoard}
+            saveDrawingData={this.saveDrawingData}
+            saveableCanvas={this.saveableCanvas}
+            leaveRoom={this.leaveRoom}
+            data={this.state.data}
+            saveableCanvas={this.saveableCanvas}
+            broadcastData={this.broadcastData}
+          />
+        </div>
+      );
+    } else {
+      return <div>{landingPage}</div>;
+    }
   }
 }
 
