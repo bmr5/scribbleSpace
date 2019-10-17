@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CanvasDraw from 'react-canvas-draw';
-import OptionBar from './OptionBar.jsx';
+import OptionBar from './OptionBar';
 
 // CanvasDraw imports the third party canvas npm package.
 // ReadMe docs located in node packages react-canvas-draw info on modifying the canvas app.
@@ -9,7 +9,7 @@ class MainBoard extends Component {
   constructor(props) {
     super(props);
   }
-  
+
   render() {
     return (
       // <div>{this.props.match.params.name}</div>

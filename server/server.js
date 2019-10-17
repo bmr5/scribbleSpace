@@ -1,7 +1,5 @@
 const express = require('express');
 const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
 require('dotenv').config();
 const port = process.env.PORT || 3000;
 const path = require('path');
@@ -10,8 +8,11 @@ const { google } = require('googleapis');
 const { url, oauth2Client } = require('./controllers/googleOAuth');
 const fetch = require('node-fetch');
 
+//controllers
 const roomCtrl = require('./controllers/roomCtrl');
 const userCtrl = require('./controllers/userCtrl');
+const { google } = require('googleapis');
+const { url, oauth2Client } = require('./controllers/googleOauth');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -40,6 +41,7 @@ app.post('/createAccount', userCtrl.createUser, (req, res, next) => {
 
 app.post('/login', userCtrl.checkLogin, (req, res, next) => {
   console.log('login for:', req.body);
+  res.cookie('username', req.body.name);
   res.send(res.locals);
 });
 
@@ -129,10 +131,26 @@ app.use((err, req, res, next) => {
   };
 });
 
-function onConnection(socket) {
-  socket.on('transfer', data => io.emit('broadcast', data));
-}
+// function onConnection(socket) {
+//   socket.on('transfer', data => io.emit('broadcast', data));
+// }
 
-io.on('connection', onConnection);
+//websocket stuff
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+
+//establish the connection to the socket
+io.on('connection', function(socket) {
+  console.log(`you're not alone`);
+  //describe events by matching them up with the strings you emit
+  socket.on('chat message', data => {
+    io.emit('chat message', data);
+  });
+
+  socket.on('drawing', data => {
+    socket.broadcast.emit('drawing', data);
+  });
+});
 
 http.listen(port, () => console.log('listening on port ' + port));
+// app.listen(port, () => console.log('listening on port ' + port));

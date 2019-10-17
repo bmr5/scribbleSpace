@@ -3,8 +3,8 @@ import LandingPage from './containers/LandingPage';
 import ScribbleSpace from './components/ScribbleSpace';
 import MainBoard from './components/MainBoard';
 
-const io = require('socket.io-client');
-const socket = io();
+// const io = require('socket.io-client');
+// const socket = io();
 
 class App extends Component {
   constructor(props) {
