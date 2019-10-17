@@ -146,3 +146,12 @@ body {
   margin-left: 1px;
   padding: 0;
 }
+
+.whiteboard {
+  border: solid;
+  background: white;
+}
+
+.colors {
+  border: solid;
+}

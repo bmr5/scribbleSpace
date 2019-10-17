@@ -106,11 +106,13 @@ io.on('connection', function(socket) {
   console.log(`you're not alone`)
   //describe events by matching them up with the strings you emit
   socket.on('chat message', (data)=>{
-    console.log(data)
-
-    // console.log(io.sockets.clients())
     io.emit('chat message', data)
   })
+
+  socket.on('drawing', (data)=>{
+    socket.broadcast.emit('drawing', data)
+  })
+
 })
 
 http.listen(port, () => console.log('listening on port ' + port));

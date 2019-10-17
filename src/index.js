@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Styles from './styles.css';
 // import App from './App.jsx';
-import WebApp from './WebApp.jsx';
+import TextApp from './TextApp.jsx';
+import CanvasApp from './CanvasApp.jsx'
 
 const Scribble = () => (
   <div>
-    <WebApp />
+    <CanvasApp />
   </div>
 );
 

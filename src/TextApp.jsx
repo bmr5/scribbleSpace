@@ -9,7 +9,7 @@ import io from 'socket.io-client';
 const socket = io()
 
 
-class WebApp extends Component {
+class TextApp extends Component {
     constructor(props) {
         super(props)
 
@@ -64,6 +64,6 @@ class WebApp extends Component {
     }    
 }
 
-export default WebApp
+export default TextApp
 
 
