@@ -78,14 +78,14 @@ app.get('/scribbleSpace', async (req, res, next) => {
   fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${tokens.id_token}`)
     .then(res => res.json())
     .then(data => {
-      res.cookie('username', data.email);
       console.log('oauth successful', data);
       req.body.username = data.email;
       req.body.password = data.kid;
       userCtrl.createUser(req, res, next);
     });
-  // res.send({ loggedIn: 'true' });
   res.locals.loggedIn = true;
+  res.cookie('username', req.body.username);
+
   res.redirect('/spaces');
 });
 
