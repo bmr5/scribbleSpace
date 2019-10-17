@@ -11,8 +11,6 @@ const fetch = require('node-fetch');
 //controllers
 const roomCtrl = require('./controllers/roomCtrl');
 const userCtrl = require('./controllers/userCtrl');
-const { google } = require('googleapis');
-const { url, oauth2Client } = require('./controllers/googleOauth');
 
 app.use(express.json());
 app.use(cookieParser());
