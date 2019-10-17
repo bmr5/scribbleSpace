@@ -14,7 +14,7 @@ class TextApp extends Component {
         super(props)
 
         this.state = {
-            textArr: ['first one']
+            textArr: ['Hello World']
         }
 
         this.handleClick = this.handleClick.bind(this)

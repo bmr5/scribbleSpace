@@ -94,8 +94,8 @@ class CanvasApp extends Component {
 
     // make the canvas fill its parent
     onResize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth/2;
+        canvas.height = window.innerHeight/2;
     }
 
     componentDidMount() {
@@ -123,7 +123,7 @@ class CanvasApp extends Component {
 
         socket.on('drawing', this.onDrawingEvent);
         window.addEventListener('resize', this.onResize, false);
-        // this.onResize();
+        this.onResize();
 
     }
 
@@ -132,13 +132,13 @@ class CanvasApp extends Component {
           <div>
             <canvas className="whiteboard" ></canvas>
 
-            <div className="colors">
+            {/* <div className="colors">
                 <div className="color black"></div>
                 <div className="color red"></div>
                 <div className="color green"></div>
                 <div className="color blue"></div>
                 <div className="color yellow"></div>
-            </div>
+            </div> */}
           </div>  
         )
     }    

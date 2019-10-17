@@ -183,16 +183,8 @@ class App extends Component {
     console.log('conditional render with state/cookie', this.state);
     if (this.state.loggedin) {
       return (
-        <div>
-          <CanvasApp
-            // loadBoard={this.loadBoard}
-            // saveDrawingData={this.saveDrawingData}
-            // saveableCanvas={this.saveableCanvas}
-            // leaveRoom={this.leaveRoom}
-            // data={this.state.data}
-            // saveableCanvas={this.saveableCanvas}
-            // broadcastData={this.broadcastData}
-          />
+        <div className='drawsection'>
+          <CanvasApp/>
           <TextApp />
         </div>
       );

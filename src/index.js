@@ -8,35 +8,6 @@ import Signup from './components/Signup';
 import ScribbleSpace from './components/ScribbleSpace';
 import MainBoard from './components/MainBoard';
 
-const Scribble = () => (
-  <div>
-    <App />
-    <section className='App'>
-      <h1 className='logoMain'>
-        <a href='/'>scribbleSpace</a>
-      </h1>
-      <Router>
-        <Switch>
-          <Route exact path='/' component={IndexPage} />
-          {/* <Route exact path='/users' component={UsersPage} /> */}
-          <Route exact path='/forgot-password' component={ResetPassword} />
-          <Route exact path='/signup' component={Signup} />
-          <Route exact path='/user/:userId' component={UserPage} />
-          <Route
-            exact
-            path='/props'
-            render={props => (
-              <PropsPage {...props} title={`send props through render`} />
-            )}
-          />
-          <Route exact path='/spaces' component={ScribbleSpace} />
-          <Route exact path='/room' component={MainBoard} />
-          <Route component={NoMatchPage} />
-        </Switch>
-      </Router>
-    </section>
-  </div>
-);
 
 const IndexPage = () => {
   return (
@@ -88,9 +59,8 @@ const NoMatchPage = () => {
 const Zapp = () => {
   return (
     <section className='App'>
-      <h1 className='logoMain'>
-        <a href='/'>scribbleSpace</a>
-      </h1>
+      
+      
       <Router>
         <Switch>
           <Route exact path='/' component={IndexPage} />
@@ -113,6 +83,11 @@ const Zapp = () => {
           <Route component={NoMatchPage} />
         </Switch>
       </Router>
+      <div>
+        <h1 className='logoMain'>
+          <a href='/'>scribbleSpace</a>
+        </h1>
+      </div>
     </section>
   );
 };
