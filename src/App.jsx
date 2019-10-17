@@ -170,8 +170,8 @@ class App extends Component {
     const scribbleSpace = (
       <ScribbleSpace socketId={this.state.socketId} name={this.state.name} />
     );
-    console.log(this.state);
-    if (this.state.loggedin) {
+    console.log('conditional render with state/cookie', this.state);
+    if (!this.state.loggedin) {
       return (
         <div>
           <MainBoard

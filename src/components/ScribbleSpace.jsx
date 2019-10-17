@@ -32,12 +32,13 @@ class ScribbleSpace extends Component {
         username: 'boots',
         roomName: this.state.roomName,
         password: 'cats',
-        socketId: this.state.socketId
+        socketId: this.state.socketId || 'scribbledSockedId'
       })
     })
       .then(res => res.json())
       .then(data => {
         if (data.status === 'available') {
+          console.log('room created');
           this.setState({ loggedin: true });
           window.location = `/room/${this.state.roomName}`;
         }

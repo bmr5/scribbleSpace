@@ -80,7 +80,7 @@ app.get('/scribbleSpace', async (req, res, next) => {
     });
   // res.send({ loggedIn: 'true' });
   res.locals.loggedIn = true;
-  res.redirect('/spaces');
+  res.redirect('http://localhost:8080/spaces');
 });
 
 //room routes

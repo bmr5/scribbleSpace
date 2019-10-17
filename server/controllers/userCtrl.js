@@ -50,7 +50,7 @@ userCtrl.createUser = function(req, res, next) {
   singleUser.save((err, user) => {
     if (err) {
       console.log(err.status);
-      res.status(300).send({ error: 'user already exists' });
+      // res.status(300).send({ error: 'user already exists' });
     } else {
       next();
     }
