@@ -39,7 +39,7 @@ app.post('/createAccount', userCtrl.createUser, (req, res, next) => {
 
 app.post('/login', userCtrl.checkLogin, (req, res, next) => {
   console.log('login for:', req.body);
-  res.cookie('username', req.body.name);
+  res.cookie('username', req.body.username);
   res.send(res.locals);
 });
 

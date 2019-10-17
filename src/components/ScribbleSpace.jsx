@@ -29,14 +29,15 @@ class ScribbleSpace extends Component {
       headers: { 'Content-type': 'application/json' },
       method: 'POST',
       body: JSON.stringify({
-        username: 'boots',
+        username: 'cats',
         roomName: this.state.roomName,
-        password: 'cats',
+        password: '369',
         socketId: this.state.socketId || 'scribbledSockedId'
       })
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data)
         if (data.status === 'available') {
           console.log('room created');
           this.setState({ loggedin: true });

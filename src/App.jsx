@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import LandingPage from './containers/LandingPage';
 import ScribbleSpace from './components/ScribbleSpace';
 import MainBoard from './components/MainBoard';
+import CanvasApp from './components/CanvasApp'
+import TextApp from './components/TextApp'
+import Cookies from 'js-cookie'
 
-// const io = require('socket.io-client');
-// const socket = io();
+const io = require('socket.io-client');
+const socket = io();
 
 class App extends Component {
   constructor(props) {
@@ -44,6 +47,10 @@ class App extends Component {
     socket.on('broadcast', data => {
       if (this._isMounted) this.setState({ data });
     });
+
+    if (Cookies.get('username')) {
+      this.setState({loggedin: true})
+    }
   }
 
   componentWillUnmount() {
@@ -85,12 +92,15 @@ class App extends Component {
       headers: { 'Content-type': 'application/json' },
       method: 'POST',
       body: JSON.stringify({
-        name: this.state.name,
+        username: this.state.name,
         password: this.state.password
       })
     })
       .then(data => data.json())
-      .then(data => console.log('here here', data))
+      .then(data => {
+        this.setState({loggedin: true})
+        if(data.canEnter) window.location='/spaces'
+      })
       .catch(err => console.log(err));
   }
   // Leave Room sets the state of "Logged in " to null.
@@ -171,18 +181,19 @@ class App extends Component {
       <ScribbleSpace socketId={this.state.socketId} name={this.state.name} />
     );
     console.log('conditional render with state/cookie', this.state);
-    if (!this.state.loggedin) {
+    if (this.state.loggedin) {
       return (
         <div>
-          <MainBoard
-            loadBoard={this.loadBoard}
-            saveDrawingData={this.saveDrawingData}
-            saveableCanvas={this.saveableCanvas}
-            leaveRoom={this.leaveRoom}
-            data={this.state.data}
-            saveableCanvas={this.saveableCanvas}
-            broadcastData={this.broadcastData}
+          <CanvasApp
+            // loadBoard={this.loadBoard}
+            // saveDrawingData={this.saveDrawingData}
+            // saveableCanvas={this.saveableCanvas}
+            // leaveRoom={this.leaveRoom}
+            // data={this.state.data}
+            // saveableCanvas={this.saveableCanvas}
+            // broadcastData={this.broadcastData}
           />
+          <TextApp />
         </div>
       );
     } else {
