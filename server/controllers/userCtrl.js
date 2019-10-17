@@ -55,6 +55,7 @@ userCtrl.createUser = function(req, res, next) {
       next();
     }
   });
+
 };
 
 module.exports = userCtrl;

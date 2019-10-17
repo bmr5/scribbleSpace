@@ -31,6 +31,7 @@ app.post('/createAccount', userCtrl.createUser, (req, res, next) => {
 
 app.post('/login', userCtrl.checkLogin, (req, res, next) => {
   console.log('login for:', req.body);
+  res.cookie('username', req.body.name)
   res.send(res.locals)
 });
 
@@ -71,6 +72,8 @@ app.get('/googleRedirectBack', async (req, res) => {
 })
 
 app.get('/', (req, res) => {
+  //set cookie on home for chatbox testing - delete later
+  res.cookie('username', 'ben')
   res.status(200).sendFile(path.resolve(__dirname, '../src/index.html'));
 });
 
@@ -102,9 +105,11 @@ const io = require('socket.io')(http);
 io.on('connection', function(socket) {
   console.log(`you're not alone`)
   //describe events by matching them up with the strings you emit
-  socket.on('chat message', (msg)=>{
-    console.log('emitting', msg)
-    io.emit('chat message', msg)
+  socket.on('chat message', (data)=>{
+    console.log(data)
+
+    // console.log(io.sockets.clients())
+    io.emit('chat message', data)
   })
 })
 

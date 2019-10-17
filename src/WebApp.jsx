@@ -1,7 +1,7 @@
 //basic sections
 import React , {Component} from 'react'
 import { render } from 'react-dom'
-
+import Cookies from 'js-cookie'
 //socket section
 //import it from npm
 import io from 'socket.io-client';
@@ -23,14 +23,20 @@ class WebApp extends Component {
     handleClick (e) {
         event.preventDefault()
         let text = document.querySelector('.textinput').value
-        socket.emit('chat message', text)
+        let obj = {
+            username: Cookies.get('username'),
+            id: socket.id,
+            msg: text
+        }
+        socket.emit('chat message', obj)
     }
 
     componentDidMount() {
-        socket.on('chat message', (msg)=>{
-            console.log('hitting the socket')
+        socket.on('chat message', (data)=>{
+            console.log(data)
+            let message = `${data.username} says ${data.msg}`
             this.setState({
-                textArr: [...this.state.textArr, msg]
+                textArr: [...this.state.textArr, message]
             })
         })
     }
@@ -51,7 +57,7 @@ class WebApp extends Component {
 
                 <form action="" className='chatinput'>
                     <input className='textinput'/>
-                    <button class='textbutton' onClick={this.handleClick}>Send</button>
+                    <button className='textbutton' onClick={this.handleClick}>Send</button>
                 </form>
             </div>
         )
