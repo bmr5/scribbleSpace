@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Styles from './styles.css';
-import App from './App.jsx';
+// import App from './App.jsx';
+import WebApp from './WebApp.jsx';
 
-const Scibble = () => (
+const Scribble = () => (
   <div>
-    <App/>
+    <WebApp />
   </div>
 );
 
-ReactDOM.render(<Scibble />, document.getElementById('root'));
+ReactDOM.render(<Scribble />, document.getElementById('root'));

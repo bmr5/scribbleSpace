@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import LandingPage from './containers/LandingPage';
 import ScribbleSpace from './containers/ScribbleSpace';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
+
+const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 
-const io = require('socket.io-client');
-const socket = io();
+// const io = require('socket.io-client');
+// const socket = io();
 
 class App extends Component {
 
@@ -36,12 +39,31 @@ class App extends Component {
   // - This.state.data is updated with broadcast data.
 
   componentDidMount() {
-    socket.on('connect', () => {
-      this.setState({ socketId: socket.id });
-    });
-    socket.on('broadcast', data => {
-      this.setState({ data });
-    });
+    // socket.on('connect', () => {
+    //   this.setState({ socketId: socket.id });
+    // });
+    // socket.on('broadcast', data => {
+    //   this.setState({ data });
+    // });
+  }
+
+  componentWillMount() {
+    client.onopen = () => {
+      console.log('WebSocket Client Connected');
+    };
+    client.onmessage = (message) => {
+      const dataFromServer = JSON.parse(message.data);
+      const stateToChange = {};
+      if (dataFromServer.type === "userevent") {
+        stateToChange.currentUsers = Object.values(dataFromServer.data.users);
+      } else if (dataFromServer.type === "contentchange") {
+        stateToChange.text = dataFromServer.data.editorContent || contentDefaultMessage;
+      }
+      stateToChange.userActivity = dataFromServer.data.userActivity;
+      this.setState({
+        ...stateToChange
+      });
+    };
   }
 
   // Method Sends canvas drawing data to server
