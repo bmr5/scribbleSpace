@@ -23,8 +23,8 @@ userCtrl.checkUser = (req, res, next) => {
   Users.find({ username: username }, (err, returnUsername) => {
     if (err) console.log(err);
     else {
-      res.locals.userExists = false
-      if (returnUsername.length ===1) res.locals.userExists = true;
+      res.locals.userExists = false;
+      if (returnUsername.length === 1) res.locals.userExists = true;
       next();
     }
   });
@@ -45,13 +45,13 @@ userCtrl.updatePassword = (req, res, next) => {
 
 userCtrl.createUser = function(req, res, next) {
   const { username, password } = req.body;
+  console.log('google auth user create', req.body);
   let singleUser = new Users({ username: username, password: password });
   singleUser.save((err, user) => {
     if (err) {
       console.log(err.status);
-      res.status(300).send({error: 'user already exists'})
-    }
-    else {
+      res.status(300).send({ error: 'user already exists' });
+    } else {
       next();
     }
   });

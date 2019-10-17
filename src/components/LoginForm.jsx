@@ -28,7 +28,7 @@ function LoginForm(props) {
           <input id='loginButton' type='submit' value='Login' />
         </div>
       </form>
-      <a className='google' href='/#'>
+      <a className='google' href='/google'>
         <img src='/google.png' />
       </a>
       <div className='links'>

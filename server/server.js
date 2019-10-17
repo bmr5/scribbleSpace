@@ -6,6 +6,9 @@ require('dotenv').config();
 const port = process.env.PORT || 3000;
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const { google } = require('googleapis');
+const { url, oauth2Client } = require('./controllers/googleOAuth');
+const fetch = require('node-fetch');
 
 const roomCtrl = require('./controllers/roomCtrl');
 const userCtrl = require('./controllers/userCtrl');
@@ -55,6 +58,27 @@ app.post('/resetPassword', userCtrl.updatePassword, (req, res, next) => {
     req.body.password
   );
   res.redirect('/');
+});
+
+//oauth routes
+app.get('/google', (req, res) => {
+  res.redirect(url);
+});
+
+app.get('/scribbleSpace', async (req, res, next) => {
+  const authCode = req.query.code;
+  const { tokens } = await oauth2Client.getToken(authCode);
+  oauth2Client.setCredentials(tokens);
+  // console.log(tokens);
+  fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${tokens.id_token}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log('oauth successful', data);
+      req.body.username = data.email;
+      req.body.password = data.kid;
+      userCtrl.createUser(req, res, next);
+    });
+  res.send(tokens);
 });
 
 //room routes
