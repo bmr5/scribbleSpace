@@ -1,38 +1,40 @@
-import React, { Component } from 'react';
-import Styles from '../styles.css';
-
+import React, { Link } from 'react';
+// Creates LoginForm, allows for input of username,password, and room number.
 function LoginForm(props) {
   return (
-    <div className="loginBox">
-      <form onSubmit={props.handleSubmit}>
-        <div className="inputBoxOnLoginComponent">
+    <div className='loginBox'>
+      <img id='scribbleLogo' src='scribble-svgrepo-com.svg' alt='' />
+      <form onSubmit={props.handleLogin}>
+        <div className='inputBoxOnLoginComponent'>
           <label>
+            {/* Username input field */}
             <input
-              placeholder="Username"
-              type="text"
+              placeholder='Username'
+              type='text'
               value={props.name}
               onChange={props.handleChangeName}
             />
           </label>
           <label>
+            {/* Password input field */}
             <input
-              placeholder="Room Name"
-              type="text"
-              value={props.roomName}
-              onChange={props.handleChangeRoom}
-            />
-          </label>
-          <label>
-            <input
-              placeholder="Password"
-              type="text"
+              placeholder='Password'
+              type='text'
               value={props.password}
               onChange={props.handleChangePassword}
             />
           </label>
-          <input className="loginButton" type="submit" value="Login" />
+          {/* Main submit button */}
+          <input id='loginButton' type='submit' value='Login' />
         </div>
       </form>
+      <a className='google' href='/google'>
+        <img src='/google.png' />
+      </a>
+      <div className='links'>
+        <a href='/forgot-password'>FORGOT PASSWORD?</a>
+        <a href='/signup'>SIGNUP</a>
+      </div>
     </div>
   );
 }

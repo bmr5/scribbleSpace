@@ -1,43 +1,44 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const webpack = require('webpack');
-
-const htmlPlugin = new HtmlWebPackPlugin({
-  template: './src/index.html',
-  filename: './index.html',
-});
 
 module.exports = {
-  entry: "./src/index.js",
-  mode: "production",
+  mode: process.env.NODE_ENV,
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, './dist/')
+  },
+  devServer: {
+    index: '',
+    publicPath: '/dist/',
+    compress: true,
+    port: 8080,
+    proxy: {
+      // https://webpack.js.org/configuration/dev-server/#devserver-proxy
+      // return true for the context which means for all endpoints, proxy to the target
+      // the index also had to be set
+      context: () => true,
+      target: 'http://localhost:3000'
+    }
+  },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   module: {
     rules: [
       {
-        test: /\.(jsx|js)$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-        },
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
       },
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-    ],
-  },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
-  output: {
-    path: path.resolve(__dirname, "dist/"),
-    filename: "bundle.js"
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "dist/"),
-    publicPath: "http://localhost:8080/dist/",
-    hotOnly: true,
-    proxy: { 'http://localhost:3000': {
-      target: 'http://localhost:8080',
-      pathRewrite: {'^/login' : '' } }
-  },
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin(), htmlPlugin],
+        test: /\.s?css$/,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
+  }
 };

@@ -1,34 +1,19 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const uri = process.env.DB_URI;
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 
 const UserSchema = new mongoose.Schema({
-  name: {
+  username: {
     type: String,
     required: true,
-    unique: true,
-  },
-  email: {
-    type: String,
-    required: true,
+    unique: true
   },
   password: {
     type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
-
-UserSchema.pre('save', function(next) {
-  // console.log('YAY! userSchema');
-  if (this.password) {
-    const saltRounds = 10;
-    const salt = bcrypt.genSaltSync(saltRounds);
-    this.password = bcrypt.hashSync(this.password, salt);
+    required: true
   }
-  next();
 });
 
-module.exports = mongoose.model('User', UserSchema);
+const Users = mongoose.model('Users', UserSchema);
+
+module.exports = Users;
