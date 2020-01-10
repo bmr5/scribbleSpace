@@ -1,64 +1,62 @@
 <<<<<<< HEAD
 const mongoose = require('mongoose');
-const createRoomModel = require('../models/roomModel');
+const uri = process.env.DB_URI;
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 
-const User = require('../models/userModel');
+const Users = require('../models/userModel');
 
 const userCtrl = {};
 
-let Room;
-// find if room exist, if not new room //otherwise check password for the room
-userCtrl.createRoom = function(req, res, next) {
-  const { name, roomName, password } = req.body;
-
-  mongoose.connection.db.listCollections().toArray((err, data) => {
-    const arr = []; // db collections
-    for (let i = 0; i < data.length; i++) {
-      arr.push(data[i].name);
+userCtrl.checkLogin = (req, res, next) => {
+  const { username, password } = req.body;
+  Users.find({ username: username, password: password }, (err, returnUser) => {
+    if (err) console.log(err);
+    else {
+      res.locals.canEnter = false;
+      if (returnUser.length === 1) res.locals.canEnter = true;
+      next();
     }
-    res.locals.roomName = roomName;
-    // console.log('arr status', arr, roomName);
-
-    if (!arr.includes(roomName)) {
-      Room = createRoomModel(roomName);
-      // passing input room into argument
-      Room.create({ roomName, password }, (err, db) => {
-        if (err) {
-          return res.status(500).send('error in create room');
-        }
-        res.locals.name = name;
-        console.log('new room created');
-        return next();
-      });
-    } else {
-      Room = createRoomModel(roomName);
-      // console.log('folder name', Room);
-      Room.findOne({ roomName }, (err, rom) => {
-        if (err) {
-          return res.status(500).send('error in create room');
-        }
-        if (rom.password !== password) {
-          console.log('wrong password', rom);
-          return res.status(403).send('false');
-        }
-        res.cookie({ name }).send('true');
-        return next();
-      });
-    }
-    // console.log('Room exist, password is good'); // async behavior
   });
 };
 
-// function to save current state
-userCtrl.saveRm = function(req, res, next) {
-  const { data } = req.body;
-  Room.findOneAndUpdate({}, { data }, { upsert: true }, (err, doc) => {
-    if (err) {
-      return res.send('error in room');
+userCtrl.checkUser = (req, res, next) => {
+  const { username } = req.body;
+  Users.find({ username: username }, (err, returnUsername) => {
+    if (err) console.log(err);
+    else {
+      res.locals.userExists = false;
+      if (returnUsername.length === 1) res.locals.userExists = true;
+      next();
     }
-    console.log('data created', doc);
-    return next();
   });
+};
+
+userCtrl.updatePassword = (req, res, next) => {
+  const { username, password } = req.body;
+  Users.findOneAndUpdate(
+    { username: username },
+    { password: password },
+    (err, response) => {
+      if (err) console.log(err);
+      res.locals.updateComplete = true;
+      next();
+    }
+  );
+};
+
+userCtrl.createUser = function(req, res, next) {
+  const { username, password } = req.body;
+  console.log('google auth user create', req.body);
+  let singleUser = new Users({ username: username, password: password });
+  singleUser.save((err, user) => {
+    if (err) {
+      console.log(err.status);
+      // res.status(300).send({ error: 'user already exists' });
+    } else {
+      next();
+    }
+  });
+<<<<<<< HEAD
 =======
 const User = require('../models/User');
 
@@ -104,6 +102,9 @@ userCtrl.verifyUser = function(req, res, next) {
     });
   }
 >>>>>>> 81074db9446e002b9ae37673a08e9c6e4a140c74
+=======
+
+>>>>>>> dev
 };
 
 module.exports = userCtrl;

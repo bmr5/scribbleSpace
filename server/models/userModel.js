@@ -1,11 +1,19 @@
 const mongoose = require('mongoose');
+<<<<<<< HEAD
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new mongoose.Schema({
   name: {
+=======
+const uri = process.env.DB_URI;
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
+
+const UserSchema = new mongoose.Schema({
+  username: {
+>>>>>>> dev
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   email: {
     type: String,
@@ -13,6 +21,7 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
+<<<<<<< HEAD
     required: true,
   },
   date: {
@@ -38,3 +47,12 @@ UserSchema.pre('save', function(next) {
 
 module.exports = mongoose.model('User', UserSchema);
 >>>>>>> 81074db9446e002b9ae37673a08e9c6e4a140c74
+=======
+    required: true
+  }
+});
+
+const Users = mongoose.model('Users', UserSchema);
+
+module.exports = Users;
+>>>>>>> dev

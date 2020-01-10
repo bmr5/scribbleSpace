@@ -1,37 +1,38 @@
-const createRoomModel = require('../models/roomModel');
+const mongoose = require('mongoose');
+const uri = process.env.DB_URI;
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 
+<<<<<<< HEAD
 const Room = createRoomModel('room6');
+=======
+const Room = require('../models/roomModel');
+>>>>>>> dev
 
 const roomCtrl = {};
 
-roomCtrl.crRoom = function(req, res, next) {
-  Room.count({}, (err, count) => {
+roomCtrl.createRoom = (req, res, next) => {
+  const { roomName, socketId, username } = req.body;
+  console.log(roomName, socketId, username);
+  let singleRoom = new Room({
+    roomName: roomName,
+    socketId: socketId,
+    users: [username]
+  });
+
+  singleRoom.save((err, room) => {
     if (err) {
-      return res.send('error in count');
+      console.log(err.status);
+      res.status(300).send({ error: 'invalid data or room already exists' });
+    } else {
+      res.locals.roomAvailable = true;
+      res.locals.socketId = socketId;
+      res.locals.users = [username];
+      next();
     }
-    const { data } = req.body;
-    Room.create({ data, saveId: count + 1 }, (err, doc) => {
-      if (err) {
-        return res.send('error in room');
-      }
-      console.log('Room created');
-      return next();
-    });
   });
 };
 
-roomCtrl.findRoom = function(req, res, next) {
-  const { saveId } = req.body;
-  Room.find({ saveId }, (err, doc) => {
-    if (err) {
-      return res.send('error in room');
-    }
-    console.log('Found Rooms', doc);
-    res.json(doc);
-    return next();
-  });
-};
-
+<<<<<<< HEAD
 roomCtrl.verifyUser = function(req, res, next) {
   const { name, email, password, password2 } = req.body;
   let errors = [];
@@ -51,5 +52,7 @@ roomCtrl.verifyUser = function(req, res, next) {
     });
   }
 };
+=======
+>>>>>>> dev
 
 module.exports = roomCtrl;

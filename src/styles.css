@@ -1,4 +1,5 @@
 .mainCanvas {
+<<<<<<< HEAD
     position: relative;
     top: 0px;
     display: flexbox;
@@ -7,9 +8,20 @@
     width: 600px;
     border: 10px solid black;
     border-radius: 10px;
+=======
+  position: relative;
+  top: 0px;
+  display: flexbox;
+  margin: 0 auto;
+  height: 400px;
+  width: 800px;
+  border: 10px solid rgb(146, 154, 175);
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgb(118, 119, 123);
+>>>>>>> dev
 }
-
 .logoMain {
+<<<<<<< HEAD
     color: aqua;
     text-align: center;
     font-size: 80px;
@@ -17,3 +29,180 @@
     text-shadow: 4px 4px  black;
 }
 
+=======
+  margin-top: 50px;
+  margin-bottom: 10px;
+  color: #fefefe;
+  text-align: center;
+  font-size: 60px;
+  font-family: 'Hepta Slab', serif;
+  text-shadow: 2px 2px 2px rgb(122, 130, 153);
+  text-decoration: line-through;
+}
+.logoMain a {
+  color: inherit;
+  text-decoration: none;
+}
+body {
+  background-color: rgb(124, 207, 248);
+}
+.loginBox {
+  position: relative;
+  top: 15px;
+  margin: 0 auto;
+  height: 265px;
+  width: 350px;
+  /* border: 1px solid rgb(209, 210, 213); */
+  border-radius: 5px;
+  background-color: #fefefe;
+  padding: 15px;
+  box-shadow: 4px 4px 4px rgb(146, 154, 175);
+}
+.inputBoxOnLoginComponent {
+  position: relative;
+  top: 5px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 30px;
+}
+.inputBoxOnLoginComponent input {
+  background-color: rgb(240, 240, 240);
+  padding-left: 3px;
+  margin-top: 5px;
+  width: 300px;
+  height: 30px;
+  /* border: 2px solid rgb(209, 210, 213); */
+  border-radius: 3px;
+}
+#loginButton {
+  position: relative;
+  top: -1px;
+  padding-top: 5px;
+  padding-bottom: 25px;
+  width: 310px !important;
+  height: 30px !important;
+  margin-top: 5px;
+  background-color: rgb(124, 207, 248);
+}
+
+#loginButton[value='Login'] {
+  color: whitesmoke;
+  font-size: 18px;
+}
+
+.google {
+  position: absolute;
+  bottom: 55px;
+  left: 55px;
+}
+.google img {
+  width: 280px;
+}
+.room {
+  margin-top: 90px;
+}
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+.links {
+  position: absolute;
+  bottom: 10px;
+  margin: 0 25px;
+}
+.links a {
+  text-decoration: none;
+  color: #000;
+  font-family: 'Hepta Slab', serif;
+}
+.links a:hover {
+  color: rgb(124, 207, 248);
+}
+.links a:last-child {
+  margin-left: 50px;
+}
+.canvasButtons {
+  color: #fefefe;
+  background-color: rgb(146, 216, 251);
+  margin: 5px;
+  height: 50px;
+  width: 150px;
+  border-radius: 12px;
+  border: 3px solid #fefefe;
+}
+
+.canvasButtons h6 {
+  display: inline;
+  font-size: 18px;
+  color: #fefefe;
+  font-family: 'Hepta Slab', serif;
+}
+
+.canvasButtons:hover {
+  background-color: rgb(118, 179, 209);
+}
+
+#scribbleLogo {
+  position: absolute;
+  left: -360px;
+}
+
+/* messagingBox */
+.messagingbox {
+  border: solid;
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.chatbox {
+  width: 100%;
+  height: 90%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.chatinput {
+  width: 100%;
+  height: 10%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.textinput {
+  height: 100%;
+  width: 84%;
+  margin: 0;
+  padding: 0;
+}
+
+.textbutton {
+  height: 100%;
+  width: 14%;
+  margin-left: 1px;
+  padding: 0;
+}
+
+.whiteboard {
+  border: solid;
+  background: white;
+}
+
+.colors {
+  border: solid;
+}
+
+.drawsection {
+  display: flex;
+  justify-content: space-around;
+  height: 450px;
+  margin-bottom: 100px;
+}
+>>>>>>> dev
