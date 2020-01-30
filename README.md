@@ -1,1 +1,1 @@
-# scribbleSpace
+# scribbleSpace - Allows multiple users to draw together through websockets
